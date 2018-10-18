@@ -2,8 +2,9 @@
 #include <malloc.h>
 #include <time.h>
 #include "lib/utilities.h"
+#include "lib/K_means.h"
 
-void generateDataPoint(int dim, int ndata, double *data) {
+void generateDataSet(int dim, int ndata, double *data) {
     for (int i = 0; i < dim * ndata; ++i) {
         data[i] = (double)(rand()%10)/10;
     }
@@ -11,6 +12,8 @@ void generateDataPoint(int dim, int ndata, double *data) {
 
 int main() {
     srand(time(NULL));
+
+    //inputs
     const int DIM = 2;
     const int N_DATA= 100;
     const int K = 8;
@@ -18,8 +21,20 @@ int main() {
     double *data;
     data = (double *)malloc(DIM*N_DATA * sizeof(double));
 
-    generateDataPoint(DIM, N_DATA, data);
+    //outputs
+    int *cluster_start, *cluster_size;
+    cluster_start = (int*) malloc(K * sizeof(int));
+    cluster_size = (int*) malloc(K * sizeof(int));
 
-    printArray(DIM*N_DATA, data);
+    double **cluster_centers;
+    cluster_centers = (double **) malloc(K * sizeof(double*));
+    for (int i = 0; i < K; ++i) {
+        cluster_centers[i] = (double*) malloc(DIM * sizeof(double));
+    }
+
+    generateDataSet(DIM, N_DATA, data);
+    printDataSet(DIM, N_DATA, data);
+
+    K_Means(DIM, N_DATA, K, cluster_start, cluster_size, cluster_centers, data);
     return 0;
 }
