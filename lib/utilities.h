@@ -1,6 +1,8 @@
 #ifndef K_MEANS_UTILITIES_H
 #define K_MEANS_UTILITIES_H
 
+typedef enum {false, true} bool;
+
 typedef struct dataPoint dataPoint;
 
 struct dataPoint {
@@ -9,6 +11,7 @@ struct dataPoint {
 
 int printArray(int size, double *array);
 void printDataSet(int dim, int ndata, double *data);
+double square(double n);
 dataPoint *getElement(int index, int dim, double *data);
 
 #endif //K_MEANS_UTILITIES_H
