@@ -1,9 +1,27 @@
 #include <stdio.h>
 #include <malloc.h>
+#include <math.h>
 #include "utilities.h"
 
 double square(double n){
     return n*n;
+}
+
+int compareDataPoint(int dim, const double *point1, const double *point2) {
+    for (int i = 0; i < dim; ++i) {
+        if (point1[i] != point2[i]) {
+            return -1;
+        }
+    }
+    return 0;
+}
+
+double distanceOf2Points(int dim, double *point1, double *point2) {
+    double distance = 0;
+    for (int i = 0; i < dim; ++i) {
+        distance += square(point1[i] - point2[i]);
+    }
+    return sqrt(distance);
 }
 
 int printArray(int size, double *array){

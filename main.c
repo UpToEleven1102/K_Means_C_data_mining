@@ -3,6 +3,7 @@
 #include <time.h>
 #include "lib/utilities.h"
 #include "lib/K_means.h"
+#include "lib/search_KMeans.h"
 
 void generateDataSet(int dim, int ndata, double *data) {
     for (int i = 0; i < dim * ndata; ++i) {
@@ -16,28 +17,37 @@ int main() {
     //inputs
     const int DIM = 2;
     const int N_DATA= 20;
-    const int K = 4;
+    int k = 8;
 
     double *data;
     data = (double *)malloc(DIM*N_DATA * sizeof(double));
 
     //outputs
     int *cluster_start, *cluster_size;
-    cluster_start = (int*) malloc(K * sizeof(int));
-    cluster_size = (int*) malloc(K * sizeof(int));
+    cluster_start = (int*) malloc(k * sizeof(int));
+    cluster_size = (int*) malloc(k * sizeof(int));
 
     double * cluster_radius;
-    cluster_radius = (double*) malloc(K * sizeof(double));
+    cluster_radius = (double*) malloc(k * sizeof(double));
 
     double **cluster_centroid;
-    cluster_centroid = (double **) malloc(K * sizeof(double*));
-    for (int i = 0; i < K; ++i) {
+    cluster_centroid = (double **) malloc(k * sizeof(double*));
+    for (int i = 0; i < k; ++i) {
         cluster_centroid[i] = (double*) malloc(DIM * sizeof(double));
     }
 
     generateDataSet(DIM, N_DATA, data);
     printDataSet(DIM, N_DATA, data);
 
-    K_Means(DIM, N_DATA, data, K, cluster_start, cluster_size, cluster_radius, cluster_centroid);
+    k = K_Means(DIM, N_DATA, data, k, cluster_start, cluster_size, cluster_radius, cluster_centroid);
+
+    double *query_pt = (double*)malloc(DIM*sizeof(double));
+    for (int i = 0; i < DIM; ++i) {
+        query_pt[i] = (double) (rand()%10)/10;
+    }
+    double *result_pt;
+    result_pt = (double*) malloc(DIM*sizeof(double));
+    search_K_Means(DIM, N_DATA, data, k, cluster_start, cluster_size, cluster_radius, cluster_centroid, query_pt, result_pt);
+
     return 0;
 }
