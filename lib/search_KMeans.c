@@ -51,7 +51,7 @@ search_K_Means(int dim, int ndata, double *data, int k, int *cluster_start, int 
     double distance = 0;
     double *temp_point = NULL;
     for (int i = 0; i < k; ++i) {
-        if(k!=closest_cluster_idx) {
+        if(i!=closest_cluster_idx) {
             distance = distanceDatumToCluster(dim, query_pt, cluster_centroid[i], cluster_radius[i]);
             if (distance < shortest_distance) {
                 temp_point = findClosestPointInCluster(dim, counter, query_pt, cluster_start[i], cluster_size[i], data);
