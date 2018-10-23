@@ -4,9 +4,14 @@
 typedef enum {false, true} bool;
 
 typedef struct dataPoint dataPoint;
-
 struct dataPoint {
     double *data;
+};
+
+typedef struct metaData metaData;
+struct metaData {
+    int idx;
+    metaData *next;
 };
 
 int compareDataPoint(int dim, const double *point1, const double *point2);

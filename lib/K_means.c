@@ -170,7 +170,7 @@ int K_Means(int dim, int ndata, double *data, int k, int *cluster_start, int *cl
         for (int i = 0; i < n_cluster; ++i) {
             printf("cluster %d--\n", i);
             if (cluster_info[i] == NULL) {
-                printf("remove cluster\n");
+                //remove cluster that doesn't have any data point attached to it
                 n_cluster--;
                 removeCluster(dim, n_cluster, i, cluster_info, cluster_size);
                 i--;

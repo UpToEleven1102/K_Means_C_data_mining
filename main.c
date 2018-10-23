@@ -47,7 +47,24 @@ int main() {
     }
     double *result_pt;
     result_pt = (double*) malloc(DIM*sizeof(double));
-    search_K_Means(DIM, N_DATA, data, k, cluster_start, cluster_size, cluster_radius, cluster_centroid, query_pt, result_pt);
+    int counter = search_K_Means(DIM, N_DATA, data, k, cluster_start, cluster_size, cluster_radius, cluster_centroid, query_pt, result_pt);
+
+    printf("Counter: %d\n", counter);
+
+    printf("closet pointer: \n");
+
+    printArray(DIM, result_pt);
+
+    free(data);
+    free(cluster_start);
+    free(cluster_size);
+    free(cluster_radius);
+    for (int i = 0; i < k; ++i) {
+        free(cluster_centroid[i]);
+    }
+    free(cluster_centroid);
+    free(query_pt);
+    free(result_pt);
 
     return 0;
 }
