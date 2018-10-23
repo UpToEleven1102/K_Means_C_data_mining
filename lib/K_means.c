@@ -126,13 +126,6 @@ int K_Means(int dim, int ndata, double *data, int k, int *cluster_start, int *cl
 
     initial_centers(dim, ndata, data, k, cluster_centroid);
 
-    for (int i = 0; i < k; ++i) {
-        printf("centroid %d\n",i);
-        for (int j = 0; j < dim; ++j) {
-            printf("%f\n", cluster_centroid[i][j]);
-        }
-    }
-
     int n_cluster = k;
     int cluster_idx = 0;
     double distance;

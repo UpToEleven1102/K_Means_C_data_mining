@@ -39,12 +39,20 @@ int main() {
     generateDataSet(DIM, N_DATA, data);
     printDataSet(DIM, N_DATA, data);
 
-    k = K_Means(DIM, N_DATA, data, k, cluster_start, cluster_size, cluster_radius, cluster_centroid);
-
     double *query_pt = (double*)malloc(DIM*sizeof(double));
+    printf("query: \n");
     for (int i = 0; i < DIM; ++i) {
         query_pt[i] = (double) (rand()%10)/10;
+        printf("%f\n", query_pt[i]);
     }
+    
+    printf("distance to each data point: \n");
+    for (int i = 0; i < N_DATA; ++i) {
+        printf("%d - %f\n", i, distanceOf2Points(DIM, query_pt, getElement(i, DIM, data)->data));
+    }
+
+    k = K_Means(DIM, N_DATA, data, k, cluster_start, cluster_size, cluster_radius, cluster_centroid);
+
     double *result_pt;
     result_pt = (double*) malloc(DIM*sizeof(double));
     int counter = search_K_Means(DIM, N_DATA, data, k, cluster_start, cluster_size, cluster_radius, cluster_centroid, query_pt, result_pt);
@@ -52,7 +60,6 @@ int main() {
     printf("Counter: %d\n", counter);
 
     printf("closet pointer: \n");
-
     printArray(DIM, result_pt);
 
     free(data);

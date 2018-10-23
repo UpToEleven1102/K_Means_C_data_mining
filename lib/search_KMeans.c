@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "search_KMeans.h"
 #include "utilities.h"
 
@@ -18,6 +19,7 @@ findClosestPointInCluster(int dim, int *counter, double *datum, int cluster_star
         double distance = distanceOf2Points(dim, datum, element->data);
         if (distance < shortest_distance) {
             free(closest_pt);
+            shortest_distance = distance;
             closest_pt = element->data;
         }
         free(element);
@@ -32,7 +34,8 @@ search_K_Means(int dim, int ndata, double *data, int k, int *cluster_start, int 
     int closest_cluster_idx = 0;
     //save distance to each cluster
     double *distances = (double *) malloc(k * sizeof(double));
-    double shortest_distance = distanceDatumToCluster(dim, query_pt, cluster_centroid[0], cluster_radius[0]);
+    distances[0] = distanceDatumToCluster(dim, query_pt, cluster_centroid[0], cluster_radius[0]);
+    double shortest_distance = distances[0];
 
     for (int i = 1; i < k; ++i) {
         distances[i] = distanceDatumToCluster(dim, query_pt, cluster_centroid[i], cluster_radius[i]);
@@ -52,8 +55,7 @@ search_K_Means(int dim, int ndata, double *data, int k, int *cluster_start, int 
     double *temp_point = NULL;
     for (int i = 0; i < k; ++i) {
         if(i!=closest_cluster_idx) {
-            distance = distanceDatumToCluster(dim, query_pt, cluster_centroid[i], cluster_radius[i]);
-            if (distance < shortest_distance) {
+            if (shortest_distance > distances[i]) {
                 temp_point = findClosestPointInCluster(dim, counter, query_pt, cluster_start[i], cluster_size[i], data);
                 distance = distanceOf2Points(dim, query_pt, temp_point);
                 if(distance < shortest_distance) {
