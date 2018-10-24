@@ -122,6 +122,8 @@ int rearrangeData(int dim, int ndata, int n_cluster, double** cluster_centroids,
 int K_Means(int dim, int ndata, double *data, int k, int *cluster_start, int *cluster_size, double *cluster_radius,
             double **cluster_centroid) {
     metaData **cluster_info;
+
+    //linked list save indices of elements belonging to each cluster
     cluster_info = (metaData **) malloc(k * sizeof(metaData *));
 
     initial_centers(dim, ndata, data, k, cluster_centroid);
